@@ -165,6 +165,13 @@ for( int e=0;e<_Element.length();e++ ){
 	Opening arOp[0];
 	arOp.append(el.opening());
 	
+	// Reset data
+	for (int o=0;o<arOp.length();o++){ 
+		OpeningSF op = (OpeningSF) arOp[o];
+		
+		op.setDescription("");
+	}
+	
 	Vector3d vx = el.vecX();
 	Vector3d vy = el.vecY();
 	Vector3d vz = el.vecZ();
@@ -366,6 +373,8 @@ for( int e=0;e<_Element.length();e++ ){
 		CoordSys elementCoordSys = el.coordSys();
 		Vector3d elX = elementCoordSys.vecX();
 		Vector3d elZ = elementCoordSys.vecZ();
+		
+		elementCoordSys.vis(3);
 		
 		CoordSys openingCoordSys = op.coordSys();
 		Vector3d openingX = openingCoordSys.vecX();
@@ -576,6 +585,33 @@ for( int e=0;e<_Element.length();e++ ){
 			opModuleOpening.setDescription(sSubLabel);
 			opModuleOpening.setNotes(bmModule.name("module"));
 			
+			// Get Center point of opening
+			PLine plOp = opModuleOpening.plShape();
+			Point3d ptOpMid = Body(plOp, vz).ptCen();
+			
+			Opening opElement[] = el.opening();
+			for (int o=0;o<opElement.length();o++){ 
+				OpeningSF op = (OpeningSF) opElement[o];
+
+				if(op.description() == "")
+				{
+					PLine plOpWithoutDescr = op.plShape();
+					Point3d ptOpWithoutDescriptionMid = Body(plOpWithoutDescr, vz).ptCen();
+					
+					ptOpMid.vis(4);
+					ptOpWithoutDescriptionMid.vis(5);
+					
+					// if op mid point is within a distance of half the opening width of the moduleOpening, use the same description and notes
+					if(abs(vx.dotProduct(ptOpWithoutDescriptionMid - ptOpMid))<(opModuleOpening.width() / 2))
+					{ 
+						op.setDescription(sSubLabel);
+						op.setNotes(bmModule.name("module"));
+			
+					}
+				}
+			}
+			
+			
 			String propSetName = "ModuleData";
 			int propSetExists = (bmModule.availablePropSetNames().find(propSetName) != -1);
 			if (propSetExists)
@@ -624,13 +660,11 @@ eraseInstance();
 <?xml version="1.0" encoding="utf-16"?>
 <Hsb_Map>
   <lst nm="TslIDESettings">
-    <lst nm="TSLIDESETTINGS">
-      <lst nm="HOSTSETTINGS">
-        <dbl nm="PREVIEWTEXTHEIGHT" ut="L" vl="1" />
-      </lst>
-      <lst nm="{E1BE2767-6E4B-4299-BBF2-FB3E14445A54}">
-        <lst nm="BREAKPOINTS" />
-      </lst>
+    <lst nm="HOSTSETTINGS">
+      <dbl nm="PREVIEWTEXTHEIGHT" ut="L" vl="1" />
+    </lst>
+    <lst nm="{E1BE2767-6E4B-4299-BBF2-FB3E14445A54}">
+      <lst nm="BREAKPOINTS" />
     </lst>
   </lst>
   <lst nm="TslInfo">
