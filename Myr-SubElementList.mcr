@@ -1,10 +1,10 @@
 ﻿#Version 8
 #BeginDescription
 Last modified by: Myresjohus
-25.06.2019  -  version 1.15
+27.10.2020  -  version 1.16
 
-Sending back module information to the Opening
-
+Setting module data even on multiple Openings
+Semicolon should always be 14 indexed
 
 
 
@@ -23,7 +23,7 @@ Sending back module information to the Opening
 #ImplInsert 1
 #FileState 1
 #MajorVersion 1
-#MinorVersion 15
+#MinorVersion 16
 #KeyWords 
 #BeginContents
 /*
@@ -79,6 +79,8 @@ Sending back module information to the Opening
 *
 * version 1.14: Added door hangside from mapx
 * version 1.15: Sending back module information to the Opening
+* version 1.16: Setting module data even on multiple Openings
+				Semicolon should always be 14 indexed
 */
 
 //Sublabel2: 
