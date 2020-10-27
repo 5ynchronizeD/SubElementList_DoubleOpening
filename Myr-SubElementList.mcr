@@ -558,14 +558,8 @@ for( int e=0;e<_Element.length();e++ ){
 			arSSubLabel[nIndexDoorWindow] = sDoorWindow; 								//10
 			arSSubLabel[nIndexModuleDescription] = sOpDescr;								//11
 			
-		
-			//reportMessage(TN(moduleName.right(1)));
-			
-			
 			if (moduleName.right(1) == "H" || moduleName.right(1)== "V") 
 			{
-				//reportMessage(TN(sOpDescr + moduleName.right(1)));
-				//reportMessage(TN(sOpDescr += moduleName.right(1));
 				arSSubLabel[nIndexModuleDescription] += moduleName.right(1); 
 			}
 			
@@ -580,6 +574,13 @@ for( int e=0;e<_Element.length();e++ ){
 				if( k == nNrOfPositionsInString )break;
 			}
 			
+			String ss[] = sSubLabel.tokenize(";", FALSE);
+			reportNotice("\n" + ss.length() + " elements in sublabel");
+			
+			if(ss.length() > nNrOfPositionsInString + 1)
+				sSubLabel = sSubLabel.left(sSubLabel.length() - 1);
+			if(ss.length() < nNrOfPositionsInString + 1)
+				sSubLabel +=  ";";
 			
 			bmModule.setSubLabel2(sSubLabel);
 			opModuleOpening.setDescription(sSubLabel);
